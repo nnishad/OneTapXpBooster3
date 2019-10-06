@@ -123,39 +123,6 @@ class GoogleSignInActivity : BaseActivity(), PurchasesUpdatedListener, View.OnCl
 
         }
 
-        rateApp.setOnClickListener {
-            Toast.makeText(
-                this@GoogleSignInActivity,
-                "Give 5-star Rating \n& Check your Achievement",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            val appPackageName = packageName // getPackageName() from Context or Activity object
-            try {
-                startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=$appPackageName")
-                    )
-                )
-                Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)!!)
-                    .unlock(getString(R.string.achievement_rate_achievement))
-                Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this)!!)
-                    .submitScore(getString(R.string.leaderboard_leaderboard), 150000)
-            } catch (anfe: ActivityNotFoundException) {
-                startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
-                    )
-                )
-                Games.getAchievementsClient(this, GoogleSignIn.getLastSignedInAccount(this)!!)
-                    .unlock(getString(R.string.achievement_rate_achievement))
-                Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this)!!)
-                    .submitScore(getString(R.string.leaderboard_leaderboard), 150000)
-            }
-
-        }
 
         disconnectButton.setOnClickListener {
             val developerurl =
@@ -316,8 +283,7 @@ class GoogleSignInActivity : BaseActivity(), PurchasesUpdatedListener, View.OnCl
             textView4.visibility = View.VISIBLE
             textView3.visibility = View.VISIBLE
             instagram.visibility = View.VISIBLE
-            rateApp.visibility = View.VISIBLE
-            textViewRate.visibility = View.VISIBLE
+
             textViewIG.visibility = View.VISIBLE
 
         } else {
@@ -330,8 +296,7 @@ class GoogleSignInActivity : BaseActivity(), PurchasesUpdatedListener, View.OnCl
             textView4.visibility = View.GONE
             textView3.visibility = View.GONE
             instagram.visibility = View.GONE
-            rateApp.visibility = View.GONE
-            textViewRate.visibility = View.GONE
+
             textViewIG.visibility = View.GONE
             leaderboard.visibility=View.GONE
             achievement.visibility=View.GONE
